@@ -13,6 +13,10 @@ client = OpenAI(
     base_url="https://api.groq.com/openai/v1"
 )
 
+def run_command(cmd:str):
+    result = os.system(cmd)
+    return result
+
 def get_weather(city: str):
     url = f"https://wttr.in/{city.lower()}?format=%C+%t"
     response = requests.get(url)
@@ -24,7 +28,8 @@ def get_weather(city: str):
 
 
 available_tools = {
-    "get_weather": get_weather
+    "get_weather": get_weather,
+    "run_command": run_command
 }
 
 
@@ -46,6 +51,7 @@ SYSTEM_PROMPT = """
 
     Available Tools:
     - get_weather(city: str): Takes a city name as input string and returns the current weatehr information about the city.
+    - run_command(cmd: str): Takes a system linux command as string and excute the command on user's system and return the output from that command.
 
 
     Example 1:
